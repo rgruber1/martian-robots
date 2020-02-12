@@ -21,7 +21,10 @@ public class Grid {
     }
 
     public void setRobotOrientation(Robot robot, Orientation orientation) {
-        Position position = positions.get(robot);
-        positions.put(robot, new Position(position.getCoordinate(), orientation));
+        positions.put(robot, new Position(positions.get(robot).getCoordinate(), orientation));
+    }
+
+    public void setRobotCoordinates(final Robot robot, final Coordinate newCoordinates) {
+        positions.put(robot, new Position(newCoordinates, positions.get(robot).getOrientation()));
     }
 }

@@ -17,4 +17,5 @@ public class Position {
     public Orientation getOrientation() {
         return orientation;
     }
+
 }
