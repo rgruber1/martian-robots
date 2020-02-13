@@ -46,7 +46,7 @@ public class MartianRobotApplication implements CommandLineRunner {
                     gridController.interpretCommandSequence(line);
                 }
             } catch (GridControllerException e) {
-                System.console().writer().write("Error:" + e.getMessage());
+                System.out.println("Error:" + e.getMessage());
             }
         }
         scanner.close();
