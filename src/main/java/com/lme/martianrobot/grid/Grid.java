@@ -21,10 +21,23 @@ public class Grid {
     }
 
     public void setRobotOrientation(Robot robot, Orientation orientation) {
+        if (positions.get(robot).isLost()) {
+            return;
+        }
+
         positions.put(robot, new Position(positions.get(robot).getCoordinate(), orientation));
     }
 
     public void setRobotCoordinates(final Robot robot, final Coordinate newCoordinates) {
-        positions.put(robot, new Position(newCoordinates, positions.get(robot).getOrientation()));
+        if (positions.get(robot).isLost()) {
+            return;
+        }
+
+        positions.put(robot,
+                new Position(newCoordinates, positions.get(robot).getOrientation(), isLostCoordinates(newCoordinates)));
+    }
+
+    private boolean isLostCoordinates(final Coordinate coordinate) {
+        return coordinate.getX() > gridSize.getX() || coordinate.getY() > gridSize.getY();
     }
 }
