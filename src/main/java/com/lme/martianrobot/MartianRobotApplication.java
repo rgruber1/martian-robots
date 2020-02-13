@@ -40,6 +40,8 @@ public class MartianRobotApplication implements CommandLineRunner {
                     for (String robotStatus : gridController.getRobotStatuses()) {
                         System.out.println(robotStatus);
                     }
+                } else if ("QUIT".equals(line)) {
+                    System.exit(0);
                 } else {
                     gridController.interpretCommandSequence(line);
                 }

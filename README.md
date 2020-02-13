@@ -24,4 +24,8 @@ mvn spring-boot:run
 ```
 STATUS
 ````
+* Quit the application:
+```
+QUIT
+````
 
