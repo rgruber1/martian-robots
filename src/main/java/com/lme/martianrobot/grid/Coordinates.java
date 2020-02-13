@@ -2,12 +2,12 @@ package com.lme.martianrobot.grid;
 
 import java.util.Objects;
 
-public class Coordinate {
+public class Coordinates {
 
     private final int x;
     private final int y;
 
-    public Coordinate(final int x, final int y) {
+    public Coordinates(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
@@ -28,7 +28,7 @@ public class Coordinate {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Coordinate that = (Coordinate) o;
+        final Coordinates that = (Coordinates) o;
         return x == that.x && y == that.y;
     }
 
@@ -39,6 +39,6 @@ public class Coordinate {
 
     @Override
     public String toString() {
-        return "Coordinate{" + "x=" + x + ", y=" + y + '}';
+        return "Coordinates{" + "x=" + x + ", y=" + y + '}';
     }
 }

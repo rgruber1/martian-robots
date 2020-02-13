@@ -62,18 +62,18 @@ public class GridController {
             if (orientation == null) {
                 throw new GridControllerException("Unknown orientation:" + component[2]);
             }
-            return new Position(new Coordinate(Integer.parseInt(component[0]), Integer.parseInt(component[1])),
+            return new Position(new Coordinates(Integer.parseInt(component[0]), Integer.parseInt(component[1])),
                     orientation);
         } catch (NumberFormatException exception) {
             throw new GridControllerException("Invalid start position for robot: " + Arrays.toString(component));
         }
     }
 
-    private Coordinate parseGridCoords(final String next) throws GridControllerException {
+    private Coordinates parseGridCoords(final String next) throws GridControllerException {
         String[] gridCoords = next.trim().split(" ");
         if (gridCoords.length == 2) {
             try {
-                return new Coordinate(parseInt(gridCoords[0]), parseInt(gridCoords[1]));
+                return new Coordinates(parseInt(gridCoords[0]), parseInt(gridCoords[1]));
             } catch (NumberFormatException e) {
                 throw new GridControllerException("Could not parse grid coordinates: " + Arrays.toString(gridCoords),
                         e);

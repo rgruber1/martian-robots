@@ -10,8 +10,8 @@ public class AbstractCommandTest {
 
     @Before
     public void beforeTest() {
-        grid = new Grid(new Coordinate(4, 4));
+        grid = new Grid(new Coordinates(4, 4));
         robot = new Robot();
-        grid.addRobot(robot, new Position(new Coordinate(2, 2), Orientation.NORTH));
+        grid.addRobot(robot, new Position(new Coordinates(2, 2), Orientation.NORTH));
     }
 }

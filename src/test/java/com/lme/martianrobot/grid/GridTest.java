@@ -10,39 +10,39 @@ public class GridTest {
 
     @Test
     public void setRobotCoordinates_ValidMove() {
-        Grid grid = new Grid(new Coordinate(4, 4));
+        Grid grid = new Grid(new Coordinates(4, 4));
         Robot robot = new Robot();
-        grid.addRobot(robot, new Position(new Coordinate(2, 2), NORTH));
-        grid.setRobotCoordinates(robot, new Coordinate(2, 3));
-        assertEquals(new Coordinate(2, 3), grid.getPositionFor(robot).getCoordinate());
+        grid.addRobot(robot, new Position(new Coordinates(2, 2), NORTH));
+        grid.setRobotCoordinates(robot, new Coordinates(2, 3));
+        assertEquals(new Coordinates(2, 3), grid.getPositionFor(robot).getCoordinates());
         assertFalse(grid.getPositionFor(robot).isLost());
     }
 
     @Test
     public void setRobotCoordinates_MoveOffGrid_MarkAsLost_ShouldNotAllowCoordinatesChange() {
-        Grid grid = new Grid(new Coordinate(4, 4));
+        Grid grid = new Grid(new Coordinates(4, 4));
         Robot robot = new Robot();
-        grid.addRobot(robot, new Position(new Coordinate(4, 4), NORTH));
+        grid.addRobot(robot, new Position(new Coordinates(4, 4), NORTH));
         assertFalse(grid.getPositionFor(robot).isLost());
 
-        grid.setRobotCoordinates(robot, new Coordinate(4, 5));
-        assertEquals(new Coordinate(4, 4), grid.getPositionFor(robot).getCoordinate());
+        grid.setRobotCoordinates(robot, new Coordinates(4, 5));
+        assertEquals(new Coordinates(4, 4), grid.getPositionFor(robot).getCoordinates());
         assertTrue(grid.getPositionFor(robot).isLost());
 
-        grid.setRobotCoordinates(robot, new Coordinate(4, 3));
-        assertEquals(new Coordinate(4, 4), grid.getPositionFor(robot).getCoordinate());
+        grid.setRobotCoordinates(robot, new Coordinates(4, 3));
+        assertEquals(new Coordinates(4, 4), grid.getPositionFor(robot).getCoordinates());
         assertTrue(grid.getPositionFor(robot).isLost());
     }
 
     @Test
     public void setRobotCoordinates_MoveOffGrid_MarkAsLost_ShouldNotAllowOrientationChange() {
-        Grid grid = new Grid(new Coordinate(4, 4));
+        Grid grid = new Grid(new Coordinates(4, 4));
         Robot robot = new Robot();
-        grid.addRobot(robot, new Position(new Coordinate(4, 4), NORTH));
+        grid.addRobot(robot, new Position(new Coordinates(4, 4), NORTH));
         assertFalse(grid.getPositionFor(robot).isLost());
 
-        grid.setRobotCoordinates(robot, new Coordinate(4, 5));
-        assertEquals(new Coordinate(4, 4), grid.getPositionFor(robot).getCoordinate());
+        grid.setRobotCoordinates(robot, new Coordinates(4, 5));
+        assertEquals(new Coordinates(4, 4), grid.getPositionFor(robot).getCoordinates());
         assertTrue(grid.getPositionFor(robot).isLost());
 
         grid.setRobotOrientation(robot, EAST);

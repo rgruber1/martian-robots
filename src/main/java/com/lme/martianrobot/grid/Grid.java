@@ -4,10 +4,10 @@ import java.util.*;
 
 public class Grid {
 
-    private final Coordinate gridSize;
+    private final Coordinates gridSize;
     private Map<Robot, Position> positions = new LinkedHashMap<>();
 
-    public Grid(Coordinate gridSize) {
+    public Grid(Coordinates gridSize) {
         this.gridSize = gridSize;
     }
 
@@ -24,24 +24,24 @@ public class Grid {
             return;
         }
 
-        positions.put(robot, new Position(positions.get(robot).getCoordinate(), orientation));
+        positions.put(robot, new Position(positions.get(robot).getCoordinates(), orientation));
     }
 
-    public void setRobotCoordinates(final Robot robot, final Coordinate newCoordinates) {
+    public void setRobotCoordinates(final Robot robot, final Coordinates newCoordinates) {
         Position position = positions.get(robot);
         if (position.isLost()) {
             return;
         }
 
         if (isLostCoordinates(newCoordinates)) {
-            positions.put(robot, new Position(position.getCoordinate(), position.getOrientation(), true));
+            positions.put(robot, new Position(position.getCoordinates(), position.getOrientation(), true));
         } else {
             positions.put(robot, new Position(newCoordinates, position.getOrientation(), position.isLost()));
         }
     }
 
-    private boolean isLostCoordinates(final Coordinate coordinate) {
-        return coordinate.getX() > gridSize.getX() || coordinate.getY() > gridSize.getY();
+    private boolean isLostCoordinates(final Coordinates coordinates) {
+        return coordinates.getX() > gridSize.getX() || coordinates.getY() > gridSize.getY();
     }
 
     public List<Robot> getRobots() {
