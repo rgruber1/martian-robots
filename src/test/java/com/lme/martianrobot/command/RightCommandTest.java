@@ -1,14 +1,14 @@
 package com.lme.martianrobot.command;
 
-import com.lme.martianrobot.grid.*;
-import org.junit.jupiter.api.Test;
+import com.lme.martianrobot.grid.Orientation;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class RightCommandTest extends AbstractCommandTest {
+public class RightCommandTest extends AbstractCommandTest {
 
     @Test
-    void accept() {
+    public void accept() {
         RightCommand command = new RightCommand();
         command.accept(grid, robot);
         assertEquals(Orientation.EAST, grid.getPositionFor(robot).getOrientation());

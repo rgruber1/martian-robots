@@ -6,7 +6,10 @@ import com.lme.martianrobot.grid.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
@@ -22,7 +25,9 @@ public class GridController {
         this.commandRegistry = commandRegistry;
     }
 
-    void interpretCommandSequence(final String line) throws GridControllerException {
+    void interpretCommandSequence(String line) throws GridControllerException {
+        line = line.trim().replaceAll(" +", " ");
+
         if (line.length() > 100) {
             throw new GridControllerException("line length should not exceed 100 characters - ignoring sequence");
         }
@@ -40,19 +45,27 @@ public class GridController {
                     commandFor.accept(grid, robot);
                 }
             }
+            robot = null;
         }
     }
 
-    private Position parseRobotPosition(final String[] line) throws GridControllerException {
-        if (line.length != 3 || line[2].length() != 1) {
-            throw new GridControllerException(
-                    "Invalid position, expected 2 coordinates and an orientation but found " + Arrays.toString(line));
+    private Position parseRobotPosition(final String[] component) throws GridControllerException {
+        if (component.length != 3) {
+            throw new GridControllerException("Invalid position, expected 2 coordinates and an orientation but found " +
+                    Arrays.toString(component));
         }
         try {
-            return new Position(new Coordinate(Integer.parseInt(line[0]), Integer.parseInt(line[1])),
-                    Orientation.valueOf(line[2]));
+            if (component[2].length() != 1) {
+                throw new GridControllerException("Invalid orientation:" + component[2]);
+            }
+            Orientation orientation = Orientation.lookupByCode(component[2].charAt(0));
+            if (orientation == null) {
+                throw new GridControllerException("Unknown orientation:" + component[2]);
+            }
+            return new Position(new Coordinate(Integer.parseInt(component[0]), Integer.parseInt(component[1])),
+                    orientation);
         } catch (NumberFormatException exception) {
-            throw new GridControllerException("Invalid start position for robot: " + Arrays.toString(line));
+            throw new GridControllerException("Invalid start position for robot: " + Arrays.toString(component));
         }
     }
 
@@ -67,5 +80,21 @@ public class GridController {
             }
         }
         throw new GridControllerException("Expected grid size [X Y]");
+    }
+
+    List<String> getRobotStatuses() {
+        if (grid == null) {
+            return Collections.singletonList("Grid yet to be initialized");
+        } else {
+            List<String> result = new ArrayList<>();
+            for (Robot robot : grid.getRobots()) {
+                result.add(grid.getPositionFor(robot).getShortDescription());
+            }
+            return result;
+        }
+    }
+
+    public Grid getGrid() {
+        return grid;
     }
 }

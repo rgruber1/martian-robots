@@ -1,12 +1,11 @@
 package com.lme.martianrobot.grid;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Grid {
 
     private final Coordinate gridSize;
-    private Map<Robot, Position> positions = new HashMap<>();
+    private Map<Robot, Position> positions = new LinkedHashMap<>();
 
     public Grid(Coordinate gridSize) {
         this.gridSize = gridSize;
@@ -29,15 +28,23 @@ public class Grid {
     }
 
     public void setRobotCoordinates(final Robot robot, final Coordinate newCoordinates) {
-        if (positions.get(robot).isLost()) {
+        Position position = positions.get(robot);
+        if (position.isLost()) {
             return;
         }
 
-        positions.put(robot,
-                new Position(newCoordinates, positions.get(robot).getOrientation(), isLostCoordinates(newCoordinates)));
+        if (isLostCoordinates(newCoordinates)) {
+            positions.put(robot, new Position(position.getCoordinate(), position.getOrientation(), true));
+        } else {
+            positions.put(robot, new Position(newCoordinates, position.getOrientation(), position.isLost()));
+        }
     }
 
     private boolean isLostCoordinates(final Coordinate coordinate) {
         return coordinate.getX() > gridSize.getX() || coordinate.getY() > gridSize.getY();
+    }
+
+    public List<Robot> getRobots() {
+        return new ArrayList<>(positions.keySet());
     }
 }

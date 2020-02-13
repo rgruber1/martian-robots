@@ -29,4 +29,14 @@ public class Position {
     public boolean isLost() {
         return isLost;
     }
+
+    public String getShortDescription() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getCoordinate().getX()).append(" ").append(getCoordinate().getY()).append(" ")
+                .append(getOrientation().getCode());
+        if (isLost()) {
+            stringBuilder.append(" LOST");
+        }
+        return stringBuilder.toString();
+    }
 }

@@ -1,14 +1,14 @@
 package com.lme.martianrobot.command;
 
 import com.lme.martianrobot.grid.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
 
 public class AbstractCommandTest {
 
     Grid grid;
     Robot robot;
 
-    @BeforeEach
+    @Before
     public void beforeTest() {
         grid = new Grid(new Coordinate(4, 4));
         robot = new Robot();
